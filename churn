@@ -1,0 +1,42 @@
+import numpy as np 
+import pandas as pd 
+import matplotlib.pyplot as plt 
+import seaborn as sns 
+
+#creating a dataframe with the data and looking at the first 5 rows
+df = pd.read_csv('data2/telco_churn.csv')
+df.head(5)
+
+#looking at shape of dataset it is 100,000 rows by 100 columns
+df.shape
+
+#describing the dataset 
+df.describe()
+
+#type of data in each column 
+df.info()
+
+#dropping Customer ID as it will not determine the probability of a customer churning
+df.drop('Customer_ID', axis = 1, inplace = True)
+df.info()
+
+# dropping churn because it relates to customers who have already left 
+df.drop('churn', axis =1, inplace = True)
+df.info()
+
+# Checking for null entries
+print(df.isnull().sum())
+
+# Plotting missing values
+plt.figure(figsize=(20, 5))
+sns.heatmap(df.isnull())
+plt.show
+
+df1 = df.dropna(inplace = True)
+df1
+
+
+#seperating into 3 groups: float, int and object for visualization
+df_categorical = [col for col in df.columns if df[col].dtype == 'object']
+df_integer = [col for col in df.columns if df[col].dtype == 'int64']
+df_float = [col for col in df.columns if df[col].dtype == 'float64']   
